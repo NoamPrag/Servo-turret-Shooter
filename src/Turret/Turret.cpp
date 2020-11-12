@@ -3,4 +3,4 @@
 Turret::Turret(const int pin)
 {
     this->attach(pin);
-}
+};
