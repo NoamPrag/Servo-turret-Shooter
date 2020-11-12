@@ -8,14 +8,18 @@ LED::LED(const unsigned int pin) : pin(pin)
 void LED::setBrightness(const unsigned int value)
 {
     analogWrite(pin, value);
+
+    prevBrightness = brightness;
     brightness = value;
-}
+};
 
 void LED::turnOff()
 {
     analogWrite(pin, 0);
+
+    prevBrightness = brightness;
     brightness = 0;
-}
+};
 
 void LED::blink(const unsigned int onTime, const unsigned int offTime, const unsigned int brightness)
 {
@@ -23,39 +27,27 @@ void LED::blink(const unsigned int onTime, const unsigned int offTime, const uns
 
     if (this->brightness <= 0)
     {
-        if (currentTime - this->changeTime >= offTime)
+        if (currentTime - changeTime >= offTime)
         {
             setBrightness(brightness);
             changeTime = currentTime;
         }
     }
-    else if (currentTime - this->changeTime >= onTime)
+    else if (currentTime - changeTime >= onTime)
     {
         turnOff();
         changeTime = currentTime;
     }
-}
+};
 
-void LED::fade(const unsigned int start, const unsigned int end, const unsigned long time)
+void LED::fade(const unsigned int start, const unsigned int end, const unsigned int fadeAmount)
 {
-    const unsigned long currentTime = millis();
-    const float brightPerTime = (start - end) / time;
-
-    // checking if brightness is not in range
-    if ((this->brightness > start && this->brightness > end) || (this->brightness < start && this->brightness < end))
-    {
+    if (abs(brightness - prevBrightness) != fadeAmount)
         setBrightness(start);
-        changeTime = currentTime;
-    }
+
+    else if (abs(end - brightness) <= abs(fadeAmount) && abs(end - prevBrightness) <= abs(2 * fadeAmount))
+        setBrightness(end);
+
     else
-    {
-        const int brightness = this->brightness + ceil((currentTime - changeTime) * brightPerTime);
-        if (this->brightness <= end + brightPerTime && this->brightness >= end - brightPerTime)
-        {
-            setBrightness(end);
-            changeTime = currentTime;
-            return;
-        }
-        setBrightness(brightness);
-    }
-}
+        setBrightness(brightness + fadeAmount);
+};
