@@ -4,8 +4,7 @@ class LED
 {
 private:
     const unsigned int pin;
-    unsigned int brightness = 0;
-    unsigned int prevBrightness = 0;
+    unsigned int brightness, prevBrightness = 0;
     unsigned long changeTime = 0;
 
 public:
