@@ -15,10 +15,7 @@ void LED::setBrightness(const unsigned int value)
 
 void LED::turnOff()
 {
-    analogWrite(pin, 0);
-
-    prevBrightness = brightness;
-    brightness = 0;
+    setBrightness(0);
 };
 
 void LED::blink(const unsigned int onTime, const unsigned int offTime, const unsigned int brightness)
