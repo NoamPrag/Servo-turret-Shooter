@@ -1,10 +1,11 @@
 #include <Servo.h>
 #include <Arduino.h>
+#include <Ultrasonic/Ultrasonic.h>
 
 class Turret : Servo
 {
 private:
-    const int pingPin, echoPin;
+    const Ultrasonic ultrasonicSensor;
 
     float length, prevLength = 0;
     float angle, prevAngle = 0;
@@ -16,5 +17,5 @@ private:
     bool isOnTarget();
 
 public:
-    Turret(const int servoPin, const int pingPin, const int echoPin);
+    Turret(const int servoPin, const int trigPin, const int echoPin);
 };

@@ -1,6 +1,6 @@
 #include <./Turret/Turret.h>
 
-Turret::Turret(const int pin, const int pingPin, const int echoPin) : pingPin(pingPin), echoPin(echoPin)
+Turret::Turret(const int pin, const int trigPin, const int echoPin) : ultrasonicSensor(trigPin, echoPin)
 {
     this->attach(pin);
 };
