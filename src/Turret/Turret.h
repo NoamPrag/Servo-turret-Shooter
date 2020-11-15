@@ -16,6 +16,9 @@ private:
     float getPredictedLength(const float nextDAngle);
     bool isOnTarget();
 
+    float getCenterOfTarget(const int startAngle, const int endAngle);
+    bool isReadyToShoot();
+
 public:
     Turret(const int servoPin, const int trigPin, const int echoPin);
 };

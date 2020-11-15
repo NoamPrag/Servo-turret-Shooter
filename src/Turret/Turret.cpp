@@ -7,7 +7,10 @@ Turret::Turret(const int pin, const int trigPin, const int echoPin) : ultrasonic
 
 void Turret::setAngle(const float angle)
 {
-    this->write(angle);
+    write(angle);
+
+    prevAngle = this->angle;
+    this->angle = angle;
 };
 
 float Turret::getAngle()
@@ -15,12 +18,12 @@ float Turret::getAngle()
     return read();
 }
 
-float cosineLaw(const float s1, const float s2, const float a)
+const float cosineLaw(const float s1, const float s2, const float a)
 {
     return (s1 * s1) + (s2 * s2) - 2 * s1 * s2 * cos(a);
 };
 
-float sasOtherSide(const float s1, const float s2, const float a)
+const float sasOtherSide(const float s1, const float s2, const float a)
 {
     return sqrt(cosineLaw(s1, s2, a));
 };
