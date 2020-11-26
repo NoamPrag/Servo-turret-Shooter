@@ -39,4 +39,4 @@ const float Ultrasonic::measureDistance()
     pulse(microsecondsToPulse);          // emitting some ultra-sound.
     const long duration = getDuration(); // listening and calculating the duration which the sound takes to reflect from the object.
     return microsecondsToCM(duration);   // converting the time to distance and returning it.
-}
+};
