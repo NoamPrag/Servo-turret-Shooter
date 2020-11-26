@@ -4,8 +4,8 @@
 class Shooter : Servo
 {
 private:
-    static const float releaseAngle;
-    static const float shootAngle;
+    const float releaseAngle;
+    const float shootAngle;
 
 public:
     Shooter(const int pin);
