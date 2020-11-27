@@ -6,7 +6,7 @@ Turret::Turret(const int pin, const int trigPin, const int echoPin)
       readyToShootTolerance(0),
       isOnTargetDistanceTolerance(0),
       minAngle(0),
-      maxAngle(0)
+      maxAngle(180)
 {
     this->attach(pin);
 };
