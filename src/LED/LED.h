@@ -16,5 +16,5 @@ public:
 
     void blink(const unsigned int onTime, const unsigned int offTime, const unsigned int brightness);
 
-    void fade(const unsigned int start, const unsigned int end, const int fadeAmount);
+    void fade(const int start, const int end, const long time);
 };

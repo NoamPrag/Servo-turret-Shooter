@@ -37,17 +37,17 @@ void LED::blink(const unsigned int onTime, const unsigned int offTime, const uns
     }
 };
 
-void LED::fade(const unsigned int start, const unsigned int end, const int fadeAmount)
+void LED::fade(const int start, const int end, const long time)
 {
-    if (abs(brightness - prevBrightness) != abs(fadeAmount))
-        setBrightness(start);
+    if (brightness == end && abs(brightness - prevBrightness) == 1)
+        return;
 
-    else if (abs(end - brightness) <= abs(fadeAmount) && abs(end - prevBrightness) <= abs(2 * fadeAmount))
-        setBrightness(end);
+    const long timeToChange = time / abs(start - end);
+    const unsigned long currentTime = millis();
 
-    else
+    if (currentTime - changeTime >= timeToChange)
     {
-        const int signedFadeAmount = abs(fadeAmount) * signbit(end - start) == 1 ? -1 : 1;
-        setBrightness(brightness + signedFadeAmount);
+        setBrightness(brightness + 1 * signbit(end - start) == 1 ? -1 : 1);
+        changeTime = currentTime;
     }
 };
