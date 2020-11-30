@@ -28,24 +28,21 @@ void Turret::reset()
 {
     write(minAngle);
 
-    prevAngle = 0;
-    angle = 0;
-
-    distance = 0;
-    prevDistance = 0;
+    prevAngle = angle = getAngle();
+    prevDistance = distance = readDistance();
 };
 
-float Turret::getAngle()
+const float Turret::getAngle()
 {
-    return angle;
+    return this->read();
 };
 
-const float cosineLaw(const float s1, const float s2, const float a)
+static const float cosineLaw(const float s1, const float s2, const float a)
 {
     return (s1 * s1) + (s2 * s2) - 2 * s1 * s2 * cos(a);
 };
 
-const float sasOtherSide(const float s1, const float s2, const float a)
+static const float sasOtherSide(const float s1, const float s2, const float a)
 {
     return sqrt(cosineLaw(s1, s2, a));
 };
