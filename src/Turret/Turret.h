@@ -15,8 +15,8 @@ private:
 
     static const float minTargetLength; // Will be used for determining whether we were on a target.
 
-    float distance, prevDistance = 0;
-    float angle, prevAngle = 0;
+    float distance = 0, prevDistance = 0;
+    float angle = 0, prevAngle = 0;
 
     float getPredictedDistance(const float nextDAngle);
 
@@ -25,7 +25,7 @@ public:
 
     void reset();
 
-    float getAngle();
+    const float getAngle();
 
     void setAngle(const float angle);
 
