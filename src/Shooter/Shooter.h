@@ -10,5 +10,7 @@ private:
 public:
     Shooter(const int pin);
 
+    void reset();
+
     void shoot();
 };

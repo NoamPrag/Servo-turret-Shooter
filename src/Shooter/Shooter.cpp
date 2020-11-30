@@ -14,3 +14,8 @@ void Shooter::shoot()
 
     this->write(releaseAngle); // Turn back to the default angle
 };
+
+void Shooter::reset()
+{
+    this->write(releaseAngle);
+}
