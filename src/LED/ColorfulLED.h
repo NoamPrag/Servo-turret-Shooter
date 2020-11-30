@@ -1,4 +1,5 @@
 #include <LED/LED.h>
+#include <LED/Color.h>
 
 class ColorfulLED
 {
@@ -8,26 +9,20 @@ private:
     LED blueLED;
 
 public:
-    ColorfulLED(const int redPin, const int greenPin, const int bluePin);
+    ColorfulLED(
+        const int redPin,
+        const int greenPin,
+        const int bluePin);
 
-    void setColor(
-        const int red,
-        const int green,
-        const int blue);
+    void setColor(const Color color);
 
     void blink(
-        const int red,
-        const int green,
-        const int blue,
+        const Color color,
         const int onTime,
         const int offTime);
 
     void fade(
-        const int startRed,
-        const int startGreen,
-        const int startBlue,
-        const int endRed,
-        const int endGreen,
-        const int endBlue,
+        const Color startColor,
+        const Color endColor,
         const int time);
 };

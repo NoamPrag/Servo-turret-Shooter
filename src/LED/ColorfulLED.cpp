@@ -1,41 +1,33 @@
 #include <LED/ColorfulLED.h>
 
-// TODO: make class "Color"?
-
 ColorfulLED::ColorfulLED(const int redPin, const int greenPin, const int bluePin)
     : redLED(redPin),
       greenLED(greenPin),
       blueLED(bluePin){};
 
-void ColorfulLED::setColor(const int red, const int green, const int blue)
+void ColorfulLED::setColor(const Color color)
 {
-    redLED.setBrightness(red);
-    greenLED.setBrightness(green);
-    blueLED.setBrightness(blue);
+    redLED.setBrightness(color.red);
+    greenLED.setBrightness(color.green);
+    blueLED.setBrightness(color.blue);
 };
 
 void ColorfulLED::blink(
-    const int red,
-    const int green,
-    const int blue,
+    const Color color,
     const int onTime,
     const int offTime)
 {
-    redLED.blink(onTime, offTime, red);
-    greenLED.blink(onTime, offTime, green);
-    blueLED.blink(onTime, offTime, blue);
+    redLED.blink(onTime, offTime, color.red);
+    greenLED.blink(onTime, offTime, color.green);
+    blueLED.blink(onTime, offTime, color.blue);
 };
 
 void ColorfulLED::fade(
-    const int startRed,
-    const int startGreen,
-    const int startBlue,
-    const int endRed,
-    const int endGreen,
-    const int endBlue,
+    const Color startColor,
+    const Color endColor,
     const int time)
 {
-    redLED.fade(startRed, endRed, time);
-    greenLED.fade(startGreen, endGreen, time);
-    blueLED.fade(startBlue, endBlue, time);
+    redLED.fade(startColor.red, endColor.red, time);
+    greenLED.fade(startColor.green, endColor.green, time);
+    blueLED.fade(startColor.blue, endColor.blue, time);
 };

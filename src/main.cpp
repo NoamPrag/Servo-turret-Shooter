@@ -3,7 +3,11 @@
 
 #include <./Turret/Turret.h>
 #include <./Shooter/Shooter.h>
-#include <LED/LED.h>
+
+#include <LED/Color.h>
+#include <LED/ColorfulLED.h>
+
+static const Color orbit = {0, 0, 200};
 
 static const int turretPin = 0;
 static const int shooterPin = 0;
@@ -17,8 +21,6 @@ static const int blueLEDPin = 0;
 static const int buttonPin = 0; // TODO: Add button to confirm shooting.
 
 static const float turretDAngle = 0; // TODO: Add real value.
-
-static LED led(9);
 
 static Turret turret(turretPin, ultrasonicTrigPin, ultrasonicEchoPin);
 static Shooter shooter(shooterPin);
