@@ -22,7 +22,7 @@ void LED::blink(const unsigned int onTime, const unsigned int offTime, const uns
 {
     const unsigned long currentTime = millis();
 
-    if (this->brightness <= 0)
+    if (this->brightness == 0)
     {
         if (currentTime - changeTime >= offTime)
         {
@@ -40,9 +40,11 @@ void LED::blink(const unsigned int onTime, const unsigned int offTime, const uns
 void LED::fade(const int start, const int end, const long time)
 {
     if (brightness == end && abs(brightness - prevBrightness) == 1)
+    {
         return;
+    }
 
-    const long timeToChange = time / abs(start - end);
+    const long timeToChange = start == end ? INFINITY : time / abs(start - end);
     const unsigned long currentTime = millis();
 
     if (currentTime - changeTime >= timeToChange)
