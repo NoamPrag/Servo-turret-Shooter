@@ -25,7 +25,7 @@ public:
 
     void reset();
 
-    const float getAngle();
+    float getAngle() const;
 
     void setAngle(const float angle);
 
