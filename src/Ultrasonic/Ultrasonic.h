@@ -13,7 +13,7 @@ private:
 
     const void pulse(const int microseconds);
     const long getDuration();
-    const float microsecondsToCM(const long microseconds);
+    static const float microsecondsToCM(const long microseconds);
 
 public:
     Ultrasonic(const int trigPin, const int echoPin);
