@@ -1,4 +1,4 @@
-#include <Ultrasonic/Ultrasonic.h>
+#include <Ultrasonic.h>
 
 const float Ultrasonic::speedOfSound_CMPerMicros = 0.034;
 const float Ultrasonic::speedOfSoundDividedByTwo = speedOfSound_CMPerMicros / 2;

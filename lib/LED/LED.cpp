@@ -1,4 +1,4 @@
-#include <LED/LED.h>
+#include <LED.h>
 
 LED::LED(const unsigned int pin) : pin(pin)
 {

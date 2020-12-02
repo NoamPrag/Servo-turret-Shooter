@@ -1,4 +1,4 @@
-#include <./Turret/Turret.h>
+#include <Turret.h>
 
 // TODO: Add real values for tolerances.
 Turret::Turret(const int pin, const int trigPin, const int echoPin)
