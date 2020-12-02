@@ -10,9 +10,6 @@ private:
     const float readyToShootTolerance;
     const float isOnTargetDistanceTolerance;
 
-    const float minAngle;
-    const float maxAngle;
-
     static const float minTargetLength; // Will be used for determining whether we were on a target.
 
     float distance = 0, prevDistance = 0;
@@ -22,6 +19,9 @@ private:
 
 public:
     Turret(const int servoPin, const int trigPin, const int echoPin);
+
+    const float minAngle;
+    const float maxAngle;
 
     void reset();
 
