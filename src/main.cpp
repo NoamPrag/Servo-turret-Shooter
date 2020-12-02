@@ -20,8 +20,6 @@ static const int blueLEDPin = 0;
 
 static const int buttonPin = 0; // TODO: Add button to confirm shooting.
 
-static const float turretDAngle = 0; // TODO: Add real value.
-
 static Turret turret(turretPin, ultrasonicTrigPin, ultrasonicEchoPin);
 static Shooter shooter(shooterPin);
 
@@ -46,6 +44,10 @@ static bool isShooting = false;
 
 static float centerOfTarget = 0;
 
+static float turretDAngle = 1;                // TODO: Add real value.
+static unsigned long dTimeToTurnTurret = 100; // TODO: add real value (in millis)
+static unsigned long lastTimeTurretTurned = 0;
+
 // TODO: Add LED logic.
 
 void loop()
@@ -59,12 +61,17 @@ void loop()
       shooter.shoot();
       isShooting = false;
     }
+  }
 
+  const unsigned long currentTime = millis();
+  if (currentTime - lastTimeTurretTurned < dTimeToTurnTurret)
+  {
     return;
   }
 
   // Turn turret dAngle degrees.
   turret.turn(turretDAngle);
+  lastTimeTurretTurned = currentTime;
 
   // Measure distance.
   const float measuredDistance = turret.readDistance();
@@ -79,6 +86,7 @@ void loop()
     if (!prevIsOnTarget) // Rising edge
     {
       startTargetAngle = currentAngle;
+      startTargetDistance = measuredDistance;
     }
 
     // gets updated all the time until loses target.
@@ -89,5 +97,10 @@ void loop()
   {
     isShooting = true;
     centerOfTarget = turret.getCenterOfTarget(startTargetAngle, startTargetDistance, endTargetAngle, endTargetDistance);
+  }
+
+  if (currentAngle >= turret.maxAngle || currentAngle <= turret.minAngle)
+  {
+    turretDAngle *= -1;
   }
 };
