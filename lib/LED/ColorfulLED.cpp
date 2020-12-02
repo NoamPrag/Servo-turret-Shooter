@@ -1,4 +1,4 @@
-#include <LED/ColorfulLED.h>
+#include <ColorfulLED.h>
 
 ColorfulLED::ColorfulLED(const int redPin, const int greenPin, const int bluePin)
     : redLED(redPin),

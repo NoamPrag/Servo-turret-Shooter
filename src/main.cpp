@@ -1,11 +1,11 @@
 #include <Arduino.h>
 #include <Servo.h>
 
-#include <./Turret/Turret.h>
-#include <./Shooter/Shooter.h>
+#include <Turret.h>
+#include <Shooter.h>
 
-#include <LED/Color.h>
-#include <LED/ColorfulLED.h>
+#include <Color.h>
+#include <ColorfulLED.h>
 
 static const Color orbit = {0, 0, 200};
 

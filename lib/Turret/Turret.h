@@ -1,6 +1,6 @@
 #include <Servo.h>
 #include <Arduino.h>
-#include <Ultrasonic/Ultrasonic.h>
+#include <Ultrasonic.h>
 
 class Turret : Servo
 {

@@ -1,5 +1,5 @@
-#include <LED/LED.h>
-#include <LED/Color.h>
+#include <LED.h>
+#include <Color.h>
 
 class ColorfulLED
 {
