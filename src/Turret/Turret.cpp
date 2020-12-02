@@ -13,10 +13,11 @@ Turret::Turret(const int pin, const int trigPin, const int echoPin)
 
 void Turret::setAngle(const float angle)
 {
-    write(angle);
+    const float boundedAngle = min(minAngle, max(maxAngle, angle));
+    write(boundedAngle);
 
     prevAngle = this->angle;
-    this->angle = angle;
+    this->angle = boundedAngle;
 };
 
 void Turret::turn(const float dAngle)
@@ -28,13 +29,13 @@ void Turret::reset()
 {
     write(minAngle);
 
-    prevAngle = angle = getAngle();
+    prevAngle = angle = minAngle;
     prevDistance = distance = readDistance();
 };
 
 const float Turret::getAngle()
 {
-    return this->read();
+    return this->angle;
 };
 
 static const float cosineLaw(const float s1, const float s2, const float a)
