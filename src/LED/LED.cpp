@@ -49,7 +49,7 @@ void LED::fade(const int start, const int end, const long time)
 
     if (currentTime - changeTime >= timeToChange)
     {
-        setBrightness(brightness + 1 * signbit(end - start) == 1 ? -1 : 1);
+        setBrightness(brightness + 1 * (signbit(end - start) == 1 ? -1 : 1));
         changeTime = currentTime;
     }
 };
