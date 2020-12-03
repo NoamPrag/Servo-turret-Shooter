@@ -1,6 +1,9 @@
 #include <ColorfulLED.h>
 
-ColorfulLED::ColorfulLED(const int redPin, const int greenPin, const int bluePin)
+ColorfulLED::ColorfulLED(
+    const unsigned int redPin,
+    const unsigned int greenPin,
+    const unsigned int bluePin)
     : redLED(redPin),
       greenLED(greenPin),
       blueLED(bluePin){};
@@ -14,8 +17,8 @@ void ColorfulLED::setColor(const Color color)
 
 void ColorfulLED::blink(
     const Color color,
-    const int onTime,
-    const int offTime)
+    const unsigned int onTime,
+    const unsigned int offTime)
 {
     redLED.blink(onTime, offTime, color.red);
     greenLED.blink(onTime, offTime, color.green);
@@ -25,7 +28,7 @@ void ColorfulLED::blink(
 void ColorfulLED::fade(
     const Color startColor,
     const Color endColor,
-    const int time)
+    const unsigned int time)
 {
     redLED.fade(startColor.red, endColor.red, time);
     greenLED.fade(startColor.green, endColor.green, time);

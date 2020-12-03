@@ -77,7 +77,7 @@ void loop()
   const float measuredDistance = turret.readDistance();
 
   // If dropping edge of being on target -> go to center and shoot; else -> keep searching.
-  const float isOnTarget = turret.isOnTarget();
+  const bool isOnTarget = turret.isOnTarget();
 
   const float currentAngle = turret.getAngle();
 
@@ -98,6 +98,8 @@ void loop()
     isShooting = true;
     centerOfTarget = turret.getCenterOfTarget(startTargetAngle, startTargetDistance, endTargetAngle, endTargetDistance);
   }
+
+  prevIsOnTarget = isOnTarget;
 
   if (currentAngle >= turret.maxAngle || currentAngle <= turret.minAngle)
   {

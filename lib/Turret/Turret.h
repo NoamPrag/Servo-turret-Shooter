@@ -18,7 +18,10 @@ private:
     float getPredictedDistance(const float nextDAngle);
 
 public:
-    Turret(const int servoPin, const int trigPin, const int echoPin);
+    Turret(
+        const unsigned int servoPin,
+        const unsigned int trigPin,
+        const unsigned int echoPin);
 
     const float minAngle;
     const float maxAngle;

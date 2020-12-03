@@ -18,7 +18,10 @@ void LED::turnOff()
     setBrightness(0);
 };
 
-void LED::blink(const unsigned int onTime, const unsigned int offTime, const unsigned int brightness)
+void LED::blink(
+    const unsigned int onTime,
+    const unsigned int offTime,
+    const unsigned int brightness)
 {
     const unsigned long currentTime = millis();
 
@@ -37,7 +40,10 @@ void LED::blink(const unsigned int onTime, const unsigned int offTime, const uns
     }
 };
 
-void LED::fade(const int start, const int end, const long time)
+void LED::fade(
+    const unsigned int start,
+    const unsigned int end,
+    const unsigned long time)
 {
     if (brightness == end && abs(brightness - prevBrightness) == 1)
     {

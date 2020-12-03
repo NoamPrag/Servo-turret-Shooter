@@ -8,7 +8,7 @@ private:
     unsigned long changeTime = 0;
 
 public:
-    LED(const unsigned int pin);
+    explicit LED(const unsigned int pin);
 
     void setBrightness(const unsigned int brightness);
 
@@ -16,5 +16,5 @@ public:
 
     void blink(const unsigned int onTime, const unsigned int offTime, const unsigned int brightness);
 
-    void fade(const int start, const int end, const long time);
+    void fade(const unsigned int start, const unsigned int end, const unsigned long time);
 };

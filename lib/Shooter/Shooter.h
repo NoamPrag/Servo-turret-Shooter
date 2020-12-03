@@ -8,7 +8,7 @@ private:
     const float shootAngle;
 
 public:
-    Shooter(const int pin);
+    explicit Shooter(const unsigned int pin);
 
     void reset();
 

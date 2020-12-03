@@ -1,7 +1,10 @@
 #include <Turret.h>
 
 // TODO: Add real values for tolerances.
-Turret::Turret(const int pin, const int trigPin, const int echoPin)
+Turret::Turret(
+    const unsigned int pin,
+    const unsigned int trigPin,
+    const unsigned int echoPin)
     : ultrasonicSensor(trigPin, echoPin),
       readyToShootTolerance(0),
       isOnTargetDistanceTolerance(0),

@@ -1,7 +1,7 @@
 #include <Shooter.h>
 
 // TODO: Add real values for angles.
-Shooter::Shooter(const int pin) : releaseAngle(0), shootAngle(0)
+Shooter::Shooter(const unsigned int pin) : releaseAngle(0), shootAngle(0)
 {
     this->attach(pin);
 };

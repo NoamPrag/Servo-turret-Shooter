@@ -10,19 +10,19 @@ private:
 
 public:
     ColorfulLED(
-        const int redPin,
-        const int greenPin,
-        const int bluePin);
+        const unsigned int redPin,
+        const unsigned int greenPin,
+        const unsigned int bluePin);
 
     void setColor(const Color color);
 
     void blink(
         const Color color,
-        const int onTime,
-        const int offTime);
+        const unsigned int onTime,
+        const unsigned int offTime);
 
     void fade(
         const Color startColor,
         const Color endColor,
-        const int time);
+        const unsigned int time);
 };
