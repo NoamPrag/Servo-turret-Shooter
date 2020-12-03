@@ -4,7 +4,6 @@
 #include <Turret.h>
 #include <Shooter.h>
 
-#include <Color.h>
 #include <ColorfulLED.h>
 
 static const Color orbit = {0, 0, 200};
