@@ -16,6 +16,8 @@ public:
 
     void setColor(const Color color);
 
+    const Color getColor();
+
     void blink(
         const Color color,
         const unsigned int onTime,

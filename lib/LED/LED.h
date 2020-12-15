@@ -12,6 +12,8 @@ public:
 
     void setBrightness(const unsigned int brightness);
 
+    const unsigned int getBrightness();
+
     void turnOff();
 
     void blink(const unsigned int onTime, const unsigned int offTime, const unsigned int brightness);

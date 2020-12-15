@@ -15,6 +15,15 @@ void ColorfulLED::setColor(const Color color)
     blueLED.setBrightness(color.blue);
 };
 
+const Color ColorfulLED::getColor()
+{
+    return {
+        this->redLED.getBrightness(),
+        this->greenLED.getBrightness(),
+        this->blueLED.getBrightness(),
+    };
+};
+
 void ColorfulLED::blink(
     const Color color,
     const unsigned int onTime,

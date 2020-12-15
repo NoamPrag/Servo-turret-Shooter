@@ -13,6 +13,11 @@ void LED::setBrightness(const unsigned int value)
     brightness = value;
 };
 
+const unsigned int LED::getBrightness()
+{
+    return this->brightness;
+};
+
 void LED::turnOff()
 {
     setBrightness(0);
