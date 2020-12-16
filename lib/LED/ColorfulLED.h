@@ -27,4 +27,9 @@ public:
         const Color startColor,
         const Color endColor,
         const unsigned int time);
+
+    void blinkFade(
+        const Color startColor,
+        const Color endColor,
+        const unsigned int time);
 };

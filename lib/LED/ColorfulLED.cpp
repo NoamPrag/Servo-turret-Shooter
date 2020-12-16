@@ -43,3 +43,13 @@ void ColorfulLED::fade(
     greenLED.fade(startColor.green, endColor.green, time);
     blueLED.fade(startColor.blue, endColor.blue, time);
 };
+
+void ColorfulLED::blinkFade(
+    const Color startColor,
+    const Color endColor,
+    const unsigned int time)
+{
+    redLED.blinkFade(startColor.red, endColor.red, time);
+    greenLED.blinkFade(startColor.green, endColor.green, time);
+    blueLED.blinkFade(startColor.blue, endColor.blue, time);
+};

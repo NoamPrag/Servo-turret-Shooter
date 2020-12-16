@@ -3,6 +3,7 @@
 LED::LED(const unsigned int pin) : pin(pin)
 {
     pinMode(pin, OUTPUT);
+    // turnOff();
 };
 
 void LED::setBrightness(const unsigned int value)
@@ -46,21 +47,65 @@ void LED::blink(
 };
 
 void LED::fade(
-    const unsigned int start,
-    const unsigned int end,
+    const int start,
+    const int end,
     const unsigned long time)
 {
-    if (brightness == end && abs(brightness - prevBrightness) == 1)
+    if (abs(brightness - prevBrightness) == 1)
     {
+        if (brightness == end)
+        {
+            return;
+        }
+    }
+    else if (brightness != start)
+    {
+        setBrightness(start);
         return;
     }
 
-    const long timeToChange = start == end ? INFINITY : time / abs(start - end);
+    const unsigned long timeToChange = start == end ? INFINITY : time / abs(end - start);
     const unsigned long currentTime = millis();
 
     if (currentTime - changeTime >= timeToChange)
     {
-        setBrightness(brightness + 1 * (signbit(end - start) == 1 ? -1 : 1));
+        setBrightness(this->brightness + ((end - start) > 0 ? 1 : -1));
         changeTime = currentTime;
+    }
+};
+
+void LED::blinkFade(const int start, const int end, const unsigned long time)
+{
+    if (abs(brightness - prevBrightness) != 1)
+    {
+        fade(end, start, time);
+        return;
+    }
+    else
+    {
+        if ((brightness - prevBrightness) > 0 == (end - start) > 0)
+        {
+            if (brightness == end)
+            {
+                fade(end, start, time);
+            }
+            else
+            {
+
+                fade(start, end, time);
+            }
+        }
+        else
+        {
+            if (brightness == start)
+            {
+                fade(start, end, time);
+            }
+            else
+            {
+
+                fade(end, start, time);
+            }
+        }
     }
 };
