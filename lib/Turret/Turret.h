@@ -5,6 +5,7 @@
 class Turret : Servo
 {
 private:
+    const unsigned int servoPin;
     Ultrasonic ultrasonicSensor; // TODO: make const?
 
     const float readyToShootTolerance;
@@ -13,7 +14,7 @@ private:
     static const float minTargetLength; // Will be used for determining whether we were on a target.
 
     float distance = 0, prevDistance = 0;
-    float angle = 0, prevAngle = 0;
+    int angle = 0, prevAngle = 0;
 
     float getPredictedDistance(const float nextDAngle);
 
@@ -23,16 +24,16 @@ public:
         const unsigned int trigPin,
         const unsigned int echoPin);
 
-    const float minAngle;
-    const float maxAngle;
+    const int minAngle;
+    const int maxAngle;
 
     void reset();
 
-    const float getAngle();
+    const int getAngle();
 
-    void setAngle(const float angle);
+    void setAngle(const int angle);
 
-    void turn(const float dAngle);
+    void turn(const int dAngle);
 
     bool isOnTarget();
 

@@ -1,11 +1,12 @@
 #include <Servo.h>
 #include <Arduino.h>
 
-class Shooter : Servo
+class Shooter : public Servo
 {
 private:
-    const float releaseAngle;
-    const float shootAngle;
+    const unsigned int servoPin;
+    const int releaseAngle;
+    const int shootAngle;
 
 public:
     explicit Shooter(const unsigned int pin);

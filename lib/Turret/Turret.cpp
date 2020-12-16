@@ -2,41 +2,41 @@
 
 // TODO: Add real values for tolerances.
 Turret::Turret(
-    const unsigned int pin,
+    const unsigned int servoPin,
     const unsigned int trigPin,
     const unsigned int echoPin)
     : ultrasonicSensor(trigPin, echoPin),
+      servoPin(servoPin),
       readyToShootTolerance(0),
       isOnTargetDistanceTolerance(0),
       minAngle(0),
-      maxAngle(180)
-{
-    this->attach(pin);
-};
+      maxAngle(180){};
 
-void Turret::setAngle(const float angle)
+void Turret::setAngle(const int angle)
 {
-    const float boundedAngle = min(minAngle, max(maxAngle, angle));
-    write(boundedAngle);
+    const int boundedAngle = max(minAngle, min(maxAngle, angle));
+    this->write(boundedAngle);
 
     prevAngle = this->angle;
     this->angle = boundedAngle;
 };
 
-void Turret::turn(const float dAngle)
+void Turret::turn(const int dAngle)
 {
     setAngle(angle + dAngle);
 };
 
 void Turret::reset()
 {
+    this->attach(this->servoPin);
+
     write(minAngle);
 
     prevAngle = angle = minAngle;
     prevDistance = distance = readDistance();
 };
 
-const float Turret::getAngle()
+const int Turret::getAngle()
 {
     return this->angle;
 };

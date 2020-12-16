@@ -1,10 +1,9 @@
 #include <Shooter.h>
 
-// TODO: Add real values for angles.
-Shooter::Shooter(const unsigned int pin) : releaseAngle(0), shootAngle(0)
-{
-    this->attach(pin);
-};
+Shooter::Shooter(const unsigned int pin)
+    : releaseAngle(60),
+      shootAngle(110),
+      servoPin(pin){};
 
 void Shooter::shoot()
 {
@@ -13,9 +12,19 @@ void Shooter::shoot()
     delay(500); // Wait half a second
 
     this->write(releaseAngle); // Turn back to the default angle
+
+    delay(500); // Wait half a second again
+
+    Serial.print("SHOOT!! :)");
 };
 
 void Shooter::reset()
 {
-    this->write(releaseAngle);
-}
+    this->attach(this->servoPin);
+
+    write(releaseAngle);
+
+    delay(1000);
+
+    Serial.println("Shooter Reset. :)");
+};

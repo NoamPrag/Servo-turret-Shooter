@@ -1,5 +1,4 @@
 #include <Arduino.h>
-#include <Servo.h>
 
 #include <Turret.h>
 #include <Shooter.h>
@@ -7,15 +6,17 @@
 #include <ColorfulLED.h>
 
 static const Color orbit = {0, 0, 200};
+static const Color searchingTarget = {255, 200, 0};
+static const Color searchingTarget2 = {0, 255, 0};
 
-static const int turretPin = 0;
-static const int shooterPin = 0;
-static const int ultrasonicTrigPin = 0;
-static const int ultrasonicEchoPin = 0;
+static const int turretPin = 9;
+static const int shooterPin = 10;
+static const int ultrasonicTrigPin = 3;
+static const int ultrasonicEchoPin = 2;
 
-static const int redLEDPin = 0;
-static const int greenLEDPin = 0;
-static const int blueLEDPin = 0;
+static const int redLEDPin = 11;
+static const int greenLEDPin = 6;
+static const int blueLEDPin = 5;
 
 static const int buttonPin = 0; // TODO: Add button to confirm shooting.
 
@@ -25,11 +26,19 @@ static Shooter shooter(shooterPin);
 void setup()
 {
   Serial.begin(9600);
-  Serial.print("Working! :)");
-  Serial.end();
+  Serial.println("Working! :)");
 
   turret.reset(); // Turn the turret to the min angle.
   shooter.reset();
+
+  delay(500);
+
+  turret.setAngle(0);
+  // delay(200);
+  // turret.setAngle(100);
+  // delay(500);
+  // shooter.shoot();
+  // delay(200);
 };
 
 static bool prevIsOnTarget = false;
@@ -43,62 +52,80 @@ static bool isShooting = false;
 
 static float centerOfTarget = 0;
 
-static float turretDAngle = 1;                // TODO: Add real value.
-static unsigned long dTimeToTurnTurret = 100; // TODO: add real value (in millis)
+static int turretDAngle = 1;                 // TODO: Add real value.
+static unsigned long dTimeToTurnTurret = 25; // TODO: add real value (in millis)
 static unsigned long lastTimeTurretTurned = 0;
 
 // TODO: Add LED logic.
 
+static bool isTrue = false; // delete this
+
 void loop()
 {
-  if (isShooting)
-  {
-    turret.setAngle(centerOfTarget);
+  if (isTrue)
+    return;
+  // if (isShooting)
+  // {
+  //   turret.setAngle(centerOfTarget);
 
-    if (turret.isReadyToShoot(centerOfTarget))
-    {
-      shooter.shoot();
-      isShooting = false;
-    }
-  }
+  //   if (turret.isReadyToShoot(centerOfTarget))
+  //   {
+  //     shooter.shoot();
+  //     isShooting = false;
+  //   }
+  // }
 
   const unsigned long currentTime = millis();
-  if (currentTime - lastTimeTurretTurned < dTimeToTurnTurret)
+
+  // if (currentTime - lastTimeTurretTurned < dTimeToTurnTurret)
+  // {
+  //   return;
+  // }
+
+  // // Turn turret dAngle degrees.
+  if (currentTime - lastTimeTurretTurned >= dTimeToTurnTurret)
   {
+    turret.turn(turretDAngle);
+    lastTimeTurretTurned = currentTime;
+  }
+
+  const int currentAngle = turret.getAngle();
+
+  //TODO: delete
+  if (currentAngle >= 160)
+  {
+    turret.setAngle(125);
+    shooter.shoot();
+    delay(1000);
+    isTrue = true;
     return;
   }
 
-  // Turn turret dAngle degrees.
-  turret.turn(turretDAngle);
-  lastTimeTurretTurned = currentTime;
+  // // Measure distance.
+  // const float measuredDistance = turret.readDistance();
 
-  // Measure distance.
-  const float measuredDistance = turret.readDistance();
+  // // If dropping edge of being on target -> go to center and shoot; else -> keep searching.
+  // const bool isOnTarget = turret.isOnTarget();
 
-  // If dropping edge of being on target -> go to center and shoot; else -> keep searching.
-  const bool isOnTarget = turret.isOnTarget();
+  // if (isOnTarget)
+  // {
+  //   if (!prevIsOnTarget) // Rising edge
+  //   {
+  //     startTargetAngle = currentAngle;
+  //     startTargetDistance = measuredDistance;
+  //   }
 
-  const float currentAngle = turret.getAngle();
+  //   // gets updated all the time until loses target.
+  //   endTargetDistance = measuredDistance;
+  //   endTargetAngle = currentAngle;
+  // }
+  // else if (prevIsOnTarget) // Dropping edge
+  // {
+  //   isShooting = true;
+  //   centerOfTarget = turret.getCenterOfTarget(startTargetAngle, startTargetDistance, endTargetAngle, endTargetDistance);
+  // }
 
-  if (isOnTarget)
-  {
-    if (!prevIsOnTarget) // Rising edge
-    {
-      startTargetAngle = currentAngle;
-      startTargetDistance = measuredDistance;
-    }
-
-    // gets updated all the time until loses target.
-    endTargetDistance = measuredDistance;
-    endTargetAngle = currentAngle;
-  }
-  else if (prevIsOnTarget) // Dropping edge
-  {
-    isShooting = true;
-    centerOfTarget = turret.getCenterOfTarget(startTargetAngle, startTargetDistance, endTargetAngle, endTargetDistance);
-  }
-
-  prevIsOnTarget = isOnTarget;
+  // prevIsOnTarget = isOnTarget;
 
   if (currentAngle >= turret.maxAngle || currentAngle <= turret.minAngle)
   {
