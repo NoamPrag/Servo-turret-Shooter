@@ -11,7 +11,8 @@ private:
     const float readyToShootTolerance;
     const float isOnTargetDistanceTolerance;
 
-    static const float minTargetLength; // Will be used for determining whether we were on a target.
+    // Will be used for determining whether we were on a target.
+    static const float minTargetLength;
 
     float distance = 0, prevDistance = 0;
     int angle = 0, prevAngle = 0;

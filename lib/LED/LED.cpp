@@ -3,7 +3,6 @@
 LED::LED(const unsigned int pin) : pin(pin)
 {
     pinMode(pin, OUTPUT);
-    // turnOff();
 };
 
 void LED::setBrightness(const unsigned int value)
@@ -54,9 +53,7 @@ void LED::fade(
     if (abs(brightness - prevBrightness) == 1)
     {
         if (brightness == end)
-        {
             return;
-        }
     }
     else if (brightness != start)
     {
@@ -76,36 +73,28 @@ void LED::fade(
 
 void LED::blinkFade(const int start, const int end, const unsigned long time)
 {
-    if (abs(brightness - prevBrightness) != 1)
+    const int dBrightness = brightness - prevBrightness; // How much has changed.
+
+    if (abs(dBrightness) != 1) // first and second call.
     {
-        fade(end, start, time);
+        fade(start, end, time);
         return;
     }
-    else
-    {
-        if ((brightness - prevBrightness) > 0 == (end - start) > 0)
-        {
-            if (brightness == end)
-            {
-                fade(end, start, time);
-            }
-            else
-            {
 
-                fade(start, end, time);
-            }
-        }
+    /*
+    * Checking for the current direction of the fade.
+    * When reaches the edge, flip the direction,
+    * and proceed until reaching the other one.
+    */
+    if (dBrightness > 0 == (end - start) > 0) // xnor gate
+
+        if (brightness == end)
+            fade(end, start, time);
         else
-        {
-            if (brightness == start)
-            {
-                fade(start, end, time);
-            }
-            else
-            {
+            fade(start, end, time);
 
-                fade(end, start, time);
-            }
-        }
-    }
+    else if (brightness == start)
+        fade(start, end, time);
+    else
+        fade(end, start, time);
 };
