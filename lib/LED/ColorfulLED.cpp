@@ -15,6 +15,11 @@ void ColorfulLED::setColor(const Color color)
     blueLED.setBrightness(color.blue);
 };
 
+void ColorfulLED::turnOff()
+{
+    this->setColor(BLACK);
+};
+
 const Color ColorfulLED::getColor()
 {
     return {
