@@ -10,15 +10,15 @@ private:
 public:
     explicit LED(const unsigned int pin);
 
-    void setBrightness(const unsigned int brightness);
+    void setBrightness(const byte brightness);
 
-    const unsigned int getBrightness();
+    const byte getBrightness();
 
     void turnOff();
 
-    void blink(const unsigned int onTime, const unsigned int offTime, const unsigned int brightness);
+    void blink(const unsigned int onTime, const unsigned int offTime, const byte brightness);
 
-    void fade(const int start, const int end, const unsigned long time);
+    void fade(const byte start, const byte end, const unsigned long time);
 
-    void blinkFade(const int start, const int end, const unsigned long time);
+    void blinkFade(const byte start, const byte end, const unsigned long time);
 };
