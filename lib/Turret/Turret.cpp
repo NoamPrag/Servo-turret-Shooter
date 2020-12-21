@@ -1,22 +1,31 @@
 #include <Turret.h>
 
+static const int turretMinAngle = 0;
+static const int turretMaxAngle = 180;
+
+static const float readyToShootAngleTolerance = 2;  // TODO: tune number.
+static const float isOnTargetDistanceTolerance = 3; // TODO: tune number.
+
 // TODO: Add real values for tolerances.
 Turret::Turret(
     const unsigned int servoPin,
     const unsigned int trigPin,
     const unsigned int echoPin)
-    : ultrasonicSensor(trigPin, echoPin),
-      servoPin(servoPin),
-      readyToShootTolerance(0),
-      isOnTargetDistanceTolerance(0),
-      minAngle(0),
-      maxAngle(180){};
+    : servoPin(servoPin),
+      ultrasonicSensor(trigPin, echoPin),
+
+      minAngle(turretMinAngle),
+      maxAngle(turretMaxAngle),
+
+      readyToShootTolerance(readyToShootAngleTolerance),
+      isOnTargetDistanceTolerance(isOnTargetDistanceTolerance){};
 
 void Turret::setAngle(const int angle)
 {
-    const int boundedAngle = max(minAngle, min(maxAngle, angle));
-    this->write(boundedAngle);
+    const int boundedAngle = max(minAngle, min(maxAngle, angle)); // bound angle to turret capabilities
+    this->write(boundedAngle);                                    // write the angle to the servo.
 
+    // update shooter state.
     prevAngle = this->angle;
     this->angle = boundedAngle;
 };
@@ -28,10 +37,11 @@ void Turret::turn(const int dAngle)
 
 void Turret::reset()
 {
-    this->attach(this->servoPin);
+    this->attach(this->servoPin); // attach the pin to the servo (this function must be called inside setup function).
 
-    write(minAngle);
+    write(minAngle); // set the turret to its min angle to be ready to search for target.
 
+    // update angle and distance state - prev and current to the current state.
     prevAngle = angle = minAngle;
     prevDistance = distance = readDistance();
 };
@@ -43,15 +53,17 @@ const int Turret::getAngle()
 
 static const float cosineLaw(const float s1, const float s2, const float a)
 {
+    // c^2 = a^2 + b^2 - 2ab * cos(alpha)
     return (s1 * s1) + (s2 * s2) - 2 * s1 * s2 * cos(a);
 };
 
 static const float sasOtherSide(const float s1, const float s2, const float a)
 {
+    // sqrt(c^2) == c
     return sqrt(cosineLaw(s1, s2, a));
 };
 
-float Turret::getPredictedDistance(const float nextDAngle)
+const float Turret::getPredictedDistance(const float nextDAngle)
 {
     const float absDAngle = abs(angle - prevAngle);
 
@@ -67,7 +79,7 @@ float Turret::getPredictedDistance(const float nextDAngle)
     return distance * sin(shooterAngleToTarget) / sin(nextAngleToTarget);
 };
 
-float Turret::getCenterOfTarget(
+const float Turret::getCenterOfTarget(
     const float startAngle,
     const float startDistance,
     const float endAngle,
@@ -79,7 +91,7 @@ float Turret::getCenterOfTarget(
 
     const float halfTargetLength = targetLength / 2;
 
-    // Law of sines
+    // law of sines
     const float startAngleToTarget = asin(sin(angleDifference) * endDistance / targetLength);
 
     const float medianLength = sasOtherSide(startDistance, halfTargetLength, startAngleToTarget);
@@ -90,17 +102,19 @@ float Turret::getCenterOfTarget(
     return startAngle + angleToMedian;
 };
 
-bool Turret::isOnTarget()
+const bool Turret::isOnTarget()
 {
+    // checking if the distance correlates to the predicted distance (plus tolerance).
     return abs(distance - getPredictedDistance(angle - prevAngle)) <= isOnTargetDistanceTolerance;
 };
 
-bool Turret::isReadyToShoot(const float centerOfTarget)
+const bool Turret::isReadyToShoot(const float centerOfTarget)
 {
+    // checking if we're on the target (plus tolerance).
     return abs(angle - centerOfTarget) <= readyToShootTolerance;
 };
 
-float Turret::readDistance()
+const float Turret::readDistance()
 {
     return ultrasonicSensor.measureDistance();
 };

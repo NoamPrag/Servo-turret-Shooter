@@ -48,7 +48,7 @@ static float startTargetDistance = 0;
 static float endTargetDistance = 0;
 static float endTargetAngle = 0;
 
-static bool isShooting = false;
+static bool fullyFoundTarget = false;
 
 static float centerOfTarget = 0;
 
@@ -58,77 +58,53 @@ static unsigned long lastTimeTurretTurned = 0;
 
 // TODO: Add LED logic.
 
-static bool isTrue = false; // delete this
-
 void loop()
 {
-  if (isTrue)
-    return;
-  // if (isShooting)
-  // {
-  //   turret.setAngle(centerOfTarget);
-
-  //   if (turret.isReadyToShoot(centerOfTarget))
-  //   {
-  //     shooter.shoot();
-  //     isShooting = false;
-  //   }
-  // }
+  if (fullyFoundTarget)
+  {
+    turret.setAngle(centerOfTarget);
+    delay(800);
+    shooter.shoot();
+    fullyFoundTarget = false;
+  }
 
   const unsigned long currentTime = millis();
 
-  // if (currentTime - lastTimeTurretTurned < dTimeToTurnTurret)
-  // {
-  //   return;
-  // }
+  if (currentTime - lastTimeTurretTurned < dTimeToTurnTurret)
+    return; // return if it's not time to turn yet.
 
-  // // Turn turret dAngle degrees.
-  if (currentTime - lastTimeTurretTurned >= dTimeToTurnTurret)
-  {
-    turret.turn(turretDAngle);
-    lastTimeTurretTurned = currentTime;
-  }
+  // Turn turret dAngle degrees
+  turret.turn(turretDAngle);
+  lastTimeTurretTurned = currentTime;
 
   const int currentAngle = turret.getAngle();
 
-  //TODO: delete
-  if (currentAngle >= 160)
+  // Measure distance.
+  const float measuredDistance = turret.readDistance();
+
+  // If dropping edge of being on target -> go to center and shoot; else -> keep searching.
+  const bool isOnTarget = turret.isOnTarget();
+
+  if (isOnTarget)
   {
-    turret.setAngle(125);
-    shooter.shoot();
-    delay(1000);
-    isTrue = true;
-    return;
+    if (!prevIsOnTarget) // Rising edge
+    {
+      startTargetAngle = currentAngle;
+      startTargetDistance = measuredDistance;
+    }
+
+    // gets updated all the time until loses target.
+    endTargetDistance = measuredDistance;
+    endTargetAngle = currentAngle;
+  }
+  else if (prevIsOnTarget) // Dropping edge
+  {
+    fullyFoundTarget = true;
+    centerOfTarget = turret.getCenterOfTarget(startTargetAngle, startTargetDistance, endTargetAngle, endTargetDistance);
   }
 
-  // // Measure distance.
-  // const float measuredDistance = turret.readDistance();
-
-  // // If dropping edge of being on target -> go to center and shoot; else -> keep searching.
-  // const bool isOnTarget = turret.isOnTarget();
-
-  // if (isOnTarget)
-  // {
-  //   if (!prevIsOnTarget) // Rising edge
-  //   {
-  //     startTargetAngle = currentAngle;
-  //     startTargetDistance = measuredDistance;
-  //   }
-
-  //   // gets updated all the time until loses target.
-  //   endTargetDistance = measuredDistance;
-  //   endTargetAngle = currentAngle;
-  // }
-  // else if (prevIsOnTarget) // Dropping edge
-  // {
-  //   isShooting = true;
-  //   centerOfTarget = turret.getCenterOfTarget(startTargetAngle, startTargetDistance, endTargetAngle, endTargetDistance);
-  // }
-
-  // prevIsOnTarget = isOnTarget;
+  prevIsOnTarget = isOnTarget;
 
   if (currentAngle >= turret.maxAngle || currentAngle <= turret.minAngle)
-  {
     turretDAngle *= -1;
-  }
 };
