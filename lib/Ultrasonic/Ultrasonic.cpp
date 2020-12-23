@@ -6,7 +6,9 @@ const float Ultrasonic::speedOfSoundDividedByTwo = speedOfSound_CMPerMicros / 2;
 const int Ultrasonic::microsecondsToPulse = 10;
 const int Ultrasonic::microsecondsToWaitBeforePulse = 2;
 
-Ultrasonic::Ultrasonic(const int trigPin, const int echoPin) : trigPin(trigPin), echoPin(echoPin)
+Ultrasonic::Ultrasonic(const int trigPin, const int echoPin)
+    : trigPin(trigPin),
+      echoPin(echoPin)
 {
     pinMode(trigPin, OUTPUT);
     pinMode(echoPin, INPUT);
