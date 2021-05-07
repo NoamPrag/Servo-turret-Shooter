@@ -57,7 +57,7 @@ static int turretDAngle = 1;
 static unsigned long dTimeToTurnTurret = 15;
 static unsigned long lastTimeTurretTurned = 0;
 
-static bool hasShoot = false;
+static bool hasShot = false;
 
 static bool buttonState = false;
 
@@ -69,18 +69,18 @@ void loop()
   if (!buttonState)
   {
     led.blinkFade({0, 0, 30}, {30, 30, 0}, 400);
-    buttonState = buttonState || !digitalRead(buttonPin);
+    buttonState = !digitalRead(buttonPin);
     return;
   }
 
   if (fullyFoundTarget)
   {
-    if (!hasShoot)
+    if (!hasShot)
     {
       led.setColor({0, 60, 0});
       delay(400);
       shooter.shoot();
-      hasShoot = true;
+      hasShot = true;
     }
     return;
   }
