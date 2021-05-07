@@ -6,13 +6,15 @@ class Turret : Servo
 {
 private:
     const unsigned int servoPin;
-    const Ultrasonic ultrasonicSensor;
+    Ultrasonic ultrasonicSensor;
 
     const float readyToShootTolerance;
     const float isOnTargetDistanceTolerance;
 
     // Will be used for determining whether we were on a target.
     static const float minTargetLength;
+
+    static const float maxDistanceToDeclareTarget;
 
     float distance = 0, prevDistance = 0;
     int angle = 0, prevAngle = 0;
@@ -36,7 +38,7 @@ public:
 
     const int getAngle();
 
-    const float readDistance();
+    float readDistance();
 
     const bool isOnTarget();
 

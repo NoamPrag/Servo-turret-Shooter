@@ -1,24 +1,23 @@
 #include <Shooter.h>
 
-static const int realeaseAngle = 60;
-static const int shootAngle = 110;
+static const int shooterReleaseAngle = 0;
+static const int shooterShootAngle = 90;
 
 Shooter::Shooter(const unsigned int pin)
-    : releaseAngle(releaseAngle),
-      shootAngle(shootAngle),
+    : releaseAngle(shooterReleaseAngle),
+      shootAngle(shooterShootAngle),
       servoPin(pin){};
 
 void Shooter::shoot()
 {
     this->write(shootAngle); // Pull the trigger.
+    Serial.print("SHOOT!! :)");
 
-    delay(500); // Wait half a second.
+    delay(700); // Wait a bit.
 
     this->write(releaseAngle); // Turn back to the default angle.
 
-    delay(500); // Wait another half a second.
-
-    Serial.print("SHOOT!! :)");
+    delay(700); // Wait some more.
 };
 
 void Shooter::reset()

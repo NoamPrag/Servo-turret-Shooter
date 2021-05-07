@@ -3,8 +3,11 @@
 static const int turretMinAngle = 0;
 static const int turretMaxAngle = 180;
 
-static const float readyToShootAngleTolerance = 2;  // TODO: tune number.
-static const float isOnTargetDistanceTolerance = 3; // TODO: tune number.
+static const float readyToShootAngleTolerance = 2;
+static const float isOnTargetDistanceTolerance = 20;
+
+const float Turret::maxDistanceToDeclareTarget = 50;
+const float Turret::minTargetLength = 5;
 
 // TODO: Add real values for tolerances.
 Turret::Turret(
@@ -105,7 +108,7 @@ const float Turret::getCenterOfTarget(
 const bool Turret::isOnTarget()
 {
     // checking if the distance correlates to the predicted distance (plus tolerance).
-    return abs(distance - getPredictedDistance(angle - prevAngle)) <= isOnTargetDistanceTolerance;
+    return distance <= maxDistanceToDeclareTarget && abs(distance - getPredictedDistance(angle - prevAngle)) <= isOnTargetDistanceTolerance;
 };
 
 const bool Turret::isReadyToShoot(const float centerOfTarget)
@@ -114,7 +117,7 @@ const bool Turret::isReadyToShoot(const float centerOfTarget)
     return abs(angle - centerOfTarget) <= readyToShootTolerance;
 };
 
-const float Turret::readDistance()
+float Turret::readDistance()
 {
     return ultrasonicSensor.measureDistance();
 };
