@@ -10,11 +10,11 @@ static const Color searchingTarget = {255, 200, 0};
 static const Color searchingTarget2 = {0, 255, 0};
 
 static const int turretPin = 9;
-static const int shooterPin = 10;
-static const int ultrasonicTrigPin = 3;
+static const int shooterPin = 11;
+static const int ultrasonicTrigPin = 10;
 static const int ultrasonicEchoPin = 2;
 
-static const int redLEDPin = 11;
+static const int redLEDPin = 3;
 static const int greenLEDPin = 6;
 static const int blueLEDPin = 5;
 
