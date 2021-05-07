@@ -5,7 +5,7 @@ LED::LED(const unsigned int pin) : pin(pin)
     pinMode(pin, OUTPUT);
 };
 
-void LED::setBrightness(const unsigned int value)
+void LED::setBrightness(const byte value)
 {
     analogWrite(pin, value);
 
@@ -13,7 +13,7 @@ void LED::setBrightness(const unsigned int value)
     brightness = value;
 };
 
-const unsigned int LED::getBrightness()
+const byte LED::getBrightness()
 {
     return this->brightness;
 };
@@ -26,7 +26,7 @@ void LED::turnOff()
 void LED::blink(
     const unsigned int onTime,
     const unsigned int offTime,
-    const unsigned int brightness)
+    const byte brightness)
 {
     const unsigned long currentTime = millis();
 
@@ -46,8 +46,8 @@ void LED::blink(
 };
 
 void LED::fade(
-    const int start,
-    const int end,
+    const byte start,
+    const byte end,
     const unsigned long time)
 {
     if (abs(brightness - prevBrightness) == 1)
@@ -71,9 +71,9 @@ void LED::fade(
     }
 };
 
-void LED::blinkFade(const int start, const int end, const unsigned long time)
+void LED::blinkFade(const byte start, const byte end, const unsigned long time)
 {
-    const int dBrightness = brightness - prevBrightness; // How much has changed.
+    const byte dBrightness = brightness - prevBrightness; // How much has changed.
 
     if (abs(dBrightness) != 1) // first and second call.
     {

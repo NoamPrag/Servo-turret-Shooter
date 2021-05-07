@@ -18,6 +18,8 @@ public:
 
     const Color getColor();
 
+    void turnOff();
+
     void blink(
         const Color color,
         const unsigned int onTime,
