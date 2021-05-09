@@ -1,7 +1,7 @@
 #include <Turret.h>
 
-static const int turretMinAngle = 0;
-static const int turretMaxAngle = 180;
+static const int turretMinAngle = 10;
+static const int turretMaxAngle = 180 - 10;
 
 static const float readyToShootAngleTolerance = 2;
 static const float isOnTargetDistanceTolerance = 20;

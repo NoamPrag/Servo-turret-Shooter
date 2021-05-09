@@ -31,8 +31,8 @@ void setup()
   Serial.println("Working! :)");
   // Serial.end();
 
-  // turret.reset(); // Turn the turret to the min angle.
-  // shooter.reset();
+  turret.reset(); // Turn the turret to the min angle.
+  shooter.reset();
   // turret.setAngle(0);
 
   led.setColor({200, 0, 0});
@@ -81,6 +81,10 @@ void loop()
       delay(400);
       shooter.shoot();
       hasShot = true;
+      buttonState = false;
+      hasShot = false;
+      fullyFoundTarget = false;
+      turret.setAngle(10);
     }
     return;
   }
