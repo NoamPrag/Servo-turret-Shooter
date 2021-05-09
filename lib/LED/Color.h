@@ -13,7 +13,22 @@ typedef struct Color
       : red((hexColor >> 0x10) & 0xFF),
         green((hexColor >> 010) & 0xFF),
         blue(hexColor & 0xFF){};
+
+  const int getHex() const
+  {
+    return this->red * 0x100 + this->green * 0x10 + this->blue;
+  };
+
+  Color blend(const Color a, const Color b)
+  {
+    return average(a.getHex(), b.getHex());
+  };
 } Color;
+
+byte average(const int x, const int y)
+{
+  return int(x + y / 2);
+};
 
 #define BLACK 0x000000
 #define WHITE 0xFFFFFF
