@@ -25,7 +25,7 @@ typedef struct Color
   };
 } Color;
 
-byte average(const int x, const int y)
+int average(const int x, const int y)
 {
   return int(x + y / 2);
 };
