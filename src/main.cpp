@@ -5,7 +5,6 @@
 
 #include <ColorfulLED.h>
 
-// static const Color searchingTargetFirstColor = {255, 200, 0};
 static const Color searchingTargetFirstColor = 0xFFC800;
 static const Color searchingTargetSecondColor = GREEN;
 
