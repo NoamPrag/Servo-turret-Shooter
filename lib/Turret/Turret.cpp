@@ -1,7 +1,7 @@
 #include <Turret.h>
 
-static const int turretMinAngle = 0;
-static const int turretMaxAngle = 180;
+static const int turretMinAngle = 10;
+static const int turretMaxAngle = 170;
 
 static const float readyToShootAngleTolerance = 2;
 static const float isOnTargetDistanceTolerance = 20;
@@ -9,7 +9,6 @@ static const float isOnTargetDistanceTolerance = 20;
 const float Turret::maxDistanceToDeclareTarget = 50;
 const float Turret::minTargetLength = 5;
 
-// TODO: Add real values for tolerances.
 Turret::Turret(
     const unsigned int servoPin,
     const unsigned int trigPin,
@@ -49,7 +48,7 @@ void Turret::reset()
     prevDistance = distance = readDistance();
 };
 
-const int Turret::getAngle()
+const int Turret::getAngle() const
 {
     return this->angle;
 };
@@ -66,7 +65,7 @@ static const float sasOtherSide(const float s1, const float s2, const float a)
     return sqrt(cosineLaw(s1, s2, a));
 };
 
-const float Turret::getPredictedDistance(const float nextDAngle)
+const float Turret::getPredictedDistance(const float nextDAngle) const
 {
     const float absDAngle = abs(angle - prevAngle);
 
@@ -86,7 +85,7 @@ const float Turret::getCenterOfTarget(
     const float startAngle,
     const float startDistance,
     const float endAngle,
-    const float endDistance)
+    const float endDistance) const
 {
     const float angleDifference = endAngle - startAngle;
 
@@ -105,19 +104,19 @@ const float Turret::getCenterOfTarget(
     return startAngle + angleToMedian;
 };
 
-const bool Turret::isOnTarget()
+const bool Turret::isOnTarget() const
 {
     // checking if the distance correlates to the predicted distance (plus tolerance).
     return distance <= maxDistanceToDeclareTarget && abs(distance - getPredictedDistance(angle - prevAngle)) <= isOnTargetDistanceTolerance;
 };
 
-const bool Turret::isReadyToShoot(const float centerOfTarget)
+const bool Turret::isReadyToShoot(const float centerOfTarget) const
 {
     // checking if we're on the target (plus tolerance).
     return abs(angle - centerOfTarget) <= readyToShootTolerance;
 };
 
-float Turret::readDistance()
+const float Turret::readDistance() const
 {
     return ultrasonicSensor.measureDistance();
 };

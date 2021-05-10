@@ -11,12 +11,12 @@ private:
 
     const int trigPin, echoPin;
 
-    const void pulse(const int microseconds);
-    const long getDuration();
+    const void pulse(const int microseconds) const;
+    const long getDuration() const;
     static const float microsecondsToCM(const long microseconds);
 
 public:
     Ultrasonic(const int trigPin, const int echoPin);
 
-    const float measureDistance();
+    const float measureDistance() const;
 };

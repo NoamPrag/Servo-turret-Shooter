@@ -6,7 +6,7 @@ class Turret : Servo
 {
 private:
     const unsigned int servoPin;
-    Ultrasonic ultrasonicSensor;
+    const Ultrasonic ultrasonicSensor;
 
     const float readyToShootTolerance;
     const float isOnTargetDistanceTolerance;
@@ -19,7 +19,7 @@ private:
     float distance = 0, prevDistance = 0;
     int angle = 0, prevAngle = 0;
 
-    const float getPredictedDistance(const float nextDAngle);
+    const float getPredictedDistance(const float nextDAngle) const;
 
 public:
     Turret(
@@ -36,17 +36,17 @@ public:
 
     void turn(const int dAngle);
 
-    const int getAngle();
+    const int getAngle() const;
 
-    float readDistance();
+    const float readDistance() const;
 
-    const bool isOnTarget();
+    const bool isOnTarget() const;
 
     const float getCenterOfTarget(
         const float startAngle,
         const float startDistance,
         const float endAngle,
-        const float endDistance);
+        const float endDistance) const;
 
-    const bool isReadyToShoot(const float centerOfTarget);
+    const bool isReadyToShoot(const float centerOfTarget) const;
 };

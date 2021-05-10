@@ -11,7 +11,6 @@ Shooter::Shooter(const unsigned int pin)
 void Shooter::shoot()
 {
     this->write(shootAngle); // Pull the trigger.
-    Serial.print("SHOOT!! :)");
 
     delay(700); // Wait a bit.
 
@@ -27,6 +26,4 @@ void Shooter::reset()
     write(releaseAngle); // Set the servo to its released angle.
 
     delay(1000); // Wait a second.
-
-    Serial.println("Shooter Reset. :)"); // Print that shooter has been reset.
 };
