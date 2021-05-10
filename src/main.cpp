@@ -5,9 +5,11 @@
 
 #include <ColorfulLED.h>
 
-static const Color orbit = {0, 0, 200};
-static const Color searchingTarget = {255, 200, 0};
-static const Color searchingTarget2 = {0, 255, 0};
+// static const Color searchingTargetFirstColor = {255, 200, 0};
+static const Color searchingTargetFirstColor = 0xFFC800;
+static const Color searchingTargetSecondColor = GREEN;
+
+static const Color foundTargetColor = YELLOW;
 
 static const int turretPin = 9;
 static const int shooterPin = 11;
@@ -50,6 +52,7 @@ void loop()
 {
   if (fullyFoundTarget)
   {
+    led.setColor(foundTargetColor);
     turret.setAngle(centerOfTarget);
     delay(800);
     shooter.shoot(); // Wait a bit before shooting in order to let the turret reach its desired angle.
@@ -84,14 +87,22 @@ void loop()
       startTargetDistance = measuredDistance;
     }
 
-    // gets updated all the time until loses target.
+    // Gets updated all the time until loses target.
     endTargetDistance = measuredDistance;
     endTargetAngle = currentAngle;
+
+    // LED informing us that we have found a target.
+    led.blinkFade(BLUE, RED, 200);
   }
   else if (prevIsOnTarget) // Dropping edge
   {
     fullyFoundTarget = true;
     centerOfTarget = turret.getCenterOfTarget(startTargetAngle, startTargetDistance, endTargetAngle, endTargetDistance);
+  }
+  else
+  {
+    // Let the LED state that we search for a target.
+    led.blinkFade(searchingTargetFirstColor, searchingTargetSecondColor, 400);
   }
 
   prevIsOnTarget = isOnTarget;
