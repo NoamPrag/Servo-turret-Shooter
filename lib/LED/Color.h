@@ -14,18 +14,23 @@ typedef struct Color
         green((hexColor >> 010) & 0xFF),
         blue(hexColor & 0xFF){};
 
+  const Color operator+(const Color other) const
+  {
+    return {
+        average(this->red, other.red),
+        average(this->green, other.green),
+        average(this->blue, other.blue),
+    };
+  }
+
   const int getHex() const
   {
-    return this->red * 0x100 + this->green * 0x10 + this->blue;
+    return (this->red << 0x10) + (this->green << 010) + this->blue;
   };
 
-  Color blend(const Color a, const Color b)
-  {
-    return average(a.getHex(), b.getHex());
-  };
 } Color;
 
-int average(const int x, const int y)
+const int average(const int x, const int y)
 {
   return int(x + y / 2);
 };
